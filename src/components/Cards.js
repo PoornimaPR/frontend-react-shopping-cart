@@ -16,57 +16,69 @@ const Cards = (props) => {
           setSelected(products.quantity);
           setTotalPrice(products.quantity * products.price);
         }
-      });
+      }, []);
     }
   }, [cartProducts]);
 
-  const handleClick = () => {
-    if (product.available > selected) {
-      setSelected(selected + 1);
+  const updateSelected = (e) => {
+    const value = e.target.value;
+    let count = selected;
+    if (value === "inc") {
+      if (product.available > selected) {
+        count = count + 1;
+      }
+    } else if (value === "dec") {
+      count = count - 1;
     }
-    props.callProducts(product, selected);
+    setSelected(count);
+    props.callProducts(product, count);
   };
 
   return (
-    <div
-      style={{
-        width: "30%",
-        margin: "30px",
-      }}
-    >
-      <div
-        className="card border border-5"
-        style={{ width: "18rem", height: "27rem" }}
-      >
-        <img
-          className="card-img-top"
-          style={{
-            marginLeft: "70px",
-            width: "120px",
-            height: "120px",
-          }}
-          src={product.img}
-          alt="Card image cap"
-        />
+    <div className="card-container">
+      <div className="card-size border border-5">
+        <img className=" card-image " src={product.img} alt="Card image cap" />
         <div className="card-body text-center">
           <h5 className="card-title bg-secondary ">{product.name}</h5>
-          <p className="card-text">{product.description}</p>
-          <h5 className="card-title bg-secondary fs-6">Rs.{product.price}</h5>
+          <p className="card-text text-wrap">{product.description}</p>
+          <h5 className="mt-7 bg-secondary fs-6 ">Rs.{product.price}</h5>
           <p className="card-text">Left : {product.available}</p>
         </div>
 
-        <div className="d-flex d-row">
-          <p className="card-text col-md-7">Selected : {selected}</p>
+        <br></br>
+        <div className="d-flex d-row ">
+          <div className="card-text col-md-7 px-3">
+            {!selected && (
+              <button
+                className="cart-btn btn btn-primary btn-sm"
+                onClick={updateSelected}
+                value="inc"
+              >
+                Add to Cart
+              </button>
+            )}
+            {selected > 0 && (
+              <div>
+                <button
+                  className="btn btn-sm bg-primary"
+                  onClick={updateSelected}
+                  value="inc"
+                >
+                  +
+                </button>
+                <span className="px-3">{selected}</span>
+                <button
+                  className="btn btn-sm bg-primary"
+                  onClick={updateSelected}
+                  value="dec"
+                >
+                  -
+                </button>
+              </div>
+            )}
+          </div>
           <p className="card-text col-md-7">Total price : {totalPrice}</p>
         </div>
-
-        <button
-          className="cart-btn btn btn-primary btn-sm col-md-4 mx-auto px-2"
-          onClick={handleClick}
-        >
-          {" "}
-          Add to Cart
-        </button>
       </div>
     </div>
   );

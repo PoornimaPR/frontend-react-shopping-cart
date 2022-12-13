@@ -1,6 +1,6 @@
+import { useContext, useEffect, useState } from "react";
 import Filter from "./Filter";
 import { getProducts } from "../service/products";
-import { useContext, useEffect, useState, useRef } from "react";
 import { CartContext } from "../App";
 import Cards from "./Cards";
 
@@ -11,43 +11,46 @@ const Home = () => {
 
   const { cartProducts, setCartProducts } = useContext(CartContext);
 
-  const effectRan = useRef(false);
-
   useEffect(() => {
-    if (effectRan.current === true) {
-      const fetchProducts = async () => {
-        getProducts().then((data) => {
-          setProducts(data);
-        });
-      };
-
-      fetchProducts();
-    }
-    return () => {
-      effectRan.current = true;
+    const fetchProducts = async () => {
+      getProducts().then((data) => {
+        setProducts(data);
+      });
     };
+
+    fetchProducts();
   }, []);
 
+  /*@function - display sorted products based on name/price/quantity
+   */
   const callSort = (product) => {
     setProducts([...product]);
   };
 
+  /*@function - display searched products based on text box value
+   */
   const callSearchItems = (searchVal) => {
     setSearch(searchVal);
   };
 
-  //set cartProducts and updating quantity
+  /*@function - set cartProducts and updating quantity
+   */
   const callProducts = (product, selected) => {
     const productExist = cartProducts.find((item) => item.id === product.id);
     if (product.available > selected) {
       if (productExist) {
-        setCartProducts(
-          cartProducts.map((item) =>
-            item.id === product.id
-              ? { ...productExist, quantity: productExist.quantity + 1 }
-              : item
-          )
-        );
+        if (selected === 0) {
+          cartProducts.pop();
+          setCartProducts([...cartProducts]);
+        } else {
+          setCartProducts(
+            cartProducts.map((item) =>
+              item.id === product.id
+                ? { ...productExist, quantity: selected }
+                : item
+            )
+          );
+        }
       } else {
         setCartProducts([...cartProducts, { ...product, quantity: 1 }]);
       }

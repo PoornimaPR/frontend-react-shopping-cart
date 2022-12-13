@@ -1,10 +1,7 @@
 const CheckoutCard = (props) => {
   const { product } = props;
   return (
-    <div
-      className="container mt-4 border border-3 border-dark"
-      style={{ width: "100vw" }}
-    >
+    <div className="cart-container mt-4 border border-3 border-dark">
       <div className="row align-items-center">
         <div className="col">
           <img src={product.img} className="" alt="..." />
@@ -20,10 +17,7 @@ const CheckoutCard = (props) => {
             <div className="form-check form-check-inline">
               Selected : {product.quantity}
             </div>
-            <div
-              className="form-check form-check-inline"
-              style={{ fontWeight: "bold" }}
-            >
+            <div className="form-check form-check-inline font-weight-bold">
               Total Price : {product.quantity * product.price}
             </div>
           </div>

@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../App";
 import { useContext, useEffect, useState } from "react";
 import CartCard from "./CartCard";
-import { toast } from "react-toastify";
 
 const Cart = () => {
   const { cartProducts, setCartProducts } = useContext(CartContext);
@@ -16,6 +15,8 @@ const Cart = () => {
 
   useEffect(() => {}, [checkoutProducts]);
 
+  /*@function - set checkout products based on the checkbox
+   */
   const getCheckoutItems = (isChecked, product) => {
     if (isChecked) {
       setCheckoutProducts([...checkoutProducts, product]);
@@ -26,10 +27,12 @@ const Cart = () => {
     }
   };
 
-  //filter the removed products and send to checkout
+  /*@function - filter the removed products and send to checkout
+   */
   const updateRemove = (arr1, arr2) => {
     let res = [];
     res = arr1.filter((el) => arr2.find((element) => element.id === el.id));
+    console.log(checkoutProducts);
 
     if (checkoutProducts.length === 0) {
     } else {
@@ -41,10 +44,14 @@ const Cart = () => {
     }
   };
 
+  /*@function - display sorted products based on name/price/quantity
+   */
   const callSort = (product) => {
     setCartProducts([...product]);
   };
 
+  /*@function - display searched products based on text box value
+   */
   const callSearchItems = (searchVal) => {
     setSearch(searchVal);
   };

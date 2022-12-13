@@ -5,3 +5,28 @@
     justify-content: space-between;
     justify-content: center;
   }
+
+.card-size{
+  width: 19rem; height: 21rem;
+}
+
+.card-image{
+  margin-left: 75px;
+  padding: 5px;
+  width: 50%;
+  height: 120px;
+}
+
+.card-container{
+  display: flex;
+  align-items: flex-start;
+  padding: 40px;
+
+}
+
+.cart-container{
+  width: 90vw;
+}
+.font-weight-bold{
+  font-weight: bold;
+}

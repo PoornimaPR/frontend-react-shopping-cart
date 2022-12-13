@@ -1,9 +1,9 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { toast } from "react-toastify";
 import { updateProducts } from "../service/products";
 import CheckoutCard from "./CheckoutCard";
 import { CartContext } from "../App";
-import { useContext } from "react";
-import { toast } from "react-toastify";
 
 const Checkout = () => {
   const { cartProducts, setCartProducts } = useContext(CartContext);
@@ -20,13 +20,22 @@ const Checkout = () => {
     res = arr1.filter((elem) => !arr2.find(({ id }) => elem.id === id));
     return res;
   };
+
+  /*@function - once payment is done, update the available quantity of products
+   */
   const updateAvailable = () => {
     updateProducts(checkout).then((data) => {
       setCartProducts(filterCartProducts(cartProducts, checkout));
-      toast.success("Payment successful", {
-        position: toast.POSITION.TOP_CENTER,
-      });
-      navigate("/", { replace: true });
+      if (checkout.length === 0) {
+        toast.error("No products to checkout", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      } else {
+        toast.success("Payment successful", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        navigate("/", { replace: true });
+      }
     });
   };
 

@@ -17,6 +17,8 @@ const CartCard = (props) => {
     });
   }, [cartProducts, isChecked]);
 
+  /*@function - increment the quantity of a product by 1
+   */
   const increment = () => {
     cartProducts.map((products) => {
       if (product.id === products.id) {
@@ -28,6 +30,8 @@ const CartCard = (props) => {
     });
   };
 
+  /*@function - decrement the quantity of a product by 1
+   */
   const decrement = () => {
     cartProducts.map((products) => {
       if (product.id === products.id) {
@@ -39,6 +43,8 @@ const CartCard = (props) => {
     });
   };
 
+  /*@function - remove a product from cart
+   */
   const removeFromCart = () => {
     const remove = cartProducts.filter(
       (products) => product.id !== products.id
@@ -46,6 +52,8 @@ const CartCard = (props) => {
     setCartProducts(remove);
   };
 
+  /*@function - set isChecked to true or false and determine checkout products
+   */
   const handleChecked = () => {
     setIsChecked((current) => !current);
     props.getCheckoutItems(!isChecked, product);
@@ -53,16 +61,14 @@ const CartCard = (props) => {
 
   return (
     <div>
-      <div
-        className="container mt-4 border border-3 border-dark"
-        style={{ width: "100vw" }}
-      >
+      <div className="cart-container mt-4 border border-3 border-dark">
         <input
           className="form-check-input"
           type="checkbox"
           checked={isChecked}
           onChange={handleChecked}
         ></input>
+
         <div className="row align-items-center">
           <div className="col">
             <img src={product.img} className="" alt="..." />
@@ -81,15 +87,14 @@ const CartCard = (props) => {
               <div className="form-check form-check-inline">
                 Selected : {count}
               </div>
-              <div
-                className="form-check form-check-inline "
-                style={{ fontWeight: "bold" }}
-              >
+              <div className="form-check form-check-inline font-weight-bold">
                 Total Price : {product.quantity * product.price}
               </div>
-              <button className="btn btn-sm bg-primary" onClick={decrement}>
-                -
-              </button>
+              {count > 1 && (
+                <button className="btn btn-sm bg-primary" onClick={decrement}>
+                  -
+                </button>
+              )}
             </div>
           </div>
           <div className="col">

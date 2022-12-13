@@ -1,8 +1,11 @@
 import axios from "axios";
+const getProductsUrl = "http://localhost:8080/api/products";
+const updateAvailProductsUrl =
+  "http://localhost:8080/api/products/updateProducts";
 
 export const getProducts = () => {
   return axios
-    .get("http://localhost:8080/api/products")
+    .get(getProductsUrl)
     .then((response) => {
       return response.data;
     })
@@ -13,7 +16,7 @@ export const getProducts = () => {
 
 export const updateProducts = (products) => {
   return axios
-    .put("http://localhost:8080/api/products/updateProducts", {
+    .put(updateAvailProductsUrl, {
       products: products,
     })
     .then((response) => {

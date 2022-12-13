@@ -1,45 +1,53 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Filter = (props) => {
   const { products } = props;
 
-  //const [radio, setRadio] = useState("");
-  const [name, setName] = useState("ascending");
+  const [sortType, setSortType] = useState("ascending");
 
+  /*@function - check sortType and sort products by name
+   */
   const sortByName = (e) => {
-    //setRadio(e.target.value);
-    if (name === "ascending") {
+    if (sortType === "ascending") {
       products.sort((a, b) => (a.name > b.name ? 1 : -1));
-    } else if (name === "descending") {
+    } else if (sortType === "descending") {
       products.sort((a, b) => (a.name < b.name ? 1 : -1));
     }
     props.callSort(products);
   };
 
+  /*@function - check sortType and sort products by price
+   */
   const sortByPrice = (e) => {
-    // setRadio(e.target.value);
-    if (name === "ascending") {
+    if (sortType === "ascending") {
       products.sort((a, b) => (a.price > b.price ? 1 : -1));
-    } else if (name === "descending") {
+    } else if (sortType === "descending") {
       products.sort((a, b) => (a.price < b.price ? 1 : -1));
     }
     props.callSort(products);
   };
 
+  /*@function - check sortType and sort products by quantity
+   */
   const sortByQuantity = (e) => {
-    //setRadio(e.target.value);
-    if (name === "ascending") {
+    if (sortType === "ascending") {
       products.sort((a, b) => (a.available > b.available ? 1 : -1));
-    } else if (name === "descending") {
+    } else if (sortType === "descending") {
       products.sort((a, b) => (a.available < b.available ? 1 : -1));
     }
     props.callSort(products);
   };
 
-  const handleCase = () => {
-    name === "ascending" ? setName("descending") : setName("ascending");
+  /*@function - set ascending/descending based on user choice
+   */
+  const changeSortType = () => {
+    sortType === "ascending"
+      ? setSortType("descending")
+      : setSortType("ascending");
   };
 
+  /*@function - pass user typed text to home page
+   */
   const getSearchItems = (e) => {
     let searchVal = e.target.value;
     props.callSearchItems(searchVal);
@@ -101,9 +109,9 @@ const Filter = (props) => {
           <button
             type="button"
             className="btn btn-primary btn-sm col-md-3 "
-            onClick={handleCase}
+            onClick={changeSortType}
           >
-            Change to {name === "ascending" ? "descending" : "ascending"}
+            Change to {sortType === "ascending" ? "descending" : "ascending"}
           </button>
         </form>
       </nav>
